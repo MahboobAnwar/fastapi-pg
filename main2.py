@@ -2,14 +2,14 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import psycopg2
 import psycopg2.extras
+import os
 
 app = FastAPI()
-DATABASE_URL ="postgresql://neondb_owner:npg_KNmXR3ryTc8V@ep-square-glade-a13ch26i-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-
 
 # ── DB CONNECTION ──────────────────────────────────────────
 def get_connection():
-    return psycopg2.connect(DATABASE_URL)
+    database_url = os.environ.get("DATABASE_URL")
+    return psycopg2.connect(database_url)
 
 # ── MODEL ──────────────────────────────────────────────────
 class User(BaseModel):
